@@ -1,346 +1,238 @@
-# 🎂 Birthday Reminder App
+# 🎂 Birthday Reminder Website
 
-A simple, personal birthday reminder web application that sends you email notifications every day at 7 AM (America/New_York timezone) when it's someone's birthday.
+A simple, clean website that displays today's birthdays. Just open it in your browser each day to check if anyone has a birthday!
 
-## Features
+## What It Does
 
-- ✨ Simple web interface to add/delete birthdays
-- 📧 Automatic daily email reminders at 7 AM EST
-- 🎨 Beautiful, responsive design
-- 💾 SQLite database (no complex setup needed)
-- 🔒 Secure - uses environment variables for sensitive data
-- 🚀 Easy to deploy to free cloud services
+- Shows a **celebratory message** if someone has a birthday today
+- Shows **"No birthdays today"** if nobody has a birthday
+- Birthdays are **hard-coded** in the source code (no database needed)
+- **No email notifications** - just visit the website when you want to check
 
-## Technology Stack
+## Your Birthdays
 
-- **Backend**: Python + Flask
-- **Database**: SQLite
-- **Scheduler**: APScheduler
-- **Email**: Gmail SMTP
+Currently tracking:
+- **David** - October 23
+- **Suzie** - October 24
+- **Kevin** - October 25
 
 ---
 
-## 📋 Prerequisites
+## 🚀 How to Set Up and Run (Beginner-Friendly)
 
-Before you start, you'll need:
+### Step 1: Install Python
 
-1. **Python 3.11+** installed on your computer
-2. **A Gmail account** with an App Password (instructions below)
-3. **Git** (for deploying to cloud services)
-4. **A GitHub account** (for version control and deployment)
+First, check if you have Python installed:
 
----
+1. Open **Terminal** (on Mac) or **Command Prompt** (on Windows)
+2. Type this and press Enter:
+   ```bash
+   python3 --version
+   ```
+3. If you see something like `Python 3.11.x`, you're good! Skip to Step 2.
+4. If not, download Python from: https://www.python.org/downloads/
+   - Download the latest version (3.11 or newer)
+   - Run the installer
+   - **Important on Windows**: Check the box that says "Add Python to PATH"
 
-## 🔐 Step 1: Create a Gmail App Password
+### Step 2: Open Terminal in the Project Folder
 
-To send emails, you need a Gmail App Password (NOT your regular Gmail password):
+1. Open **Terminal** (Mac) or **Command Prompt** (Windows)
+2. Navigate to the birthday folder:
+   ```bash
+   cd "/Users/dkl2865/Documents/Vibe Coding/birthday"
+   ```
 
-1. Go to your Google Account: https://myaccount.google.com/
-2. Click on **Security** in the left sidebar
-3. Enable **2-Step Verification** if you haven't already (required for App Passwords)
-4. After enabling 2-Step Verification, search for "App passwords" or go to: https://myaccount.google.com/apppasswords
-5. Click **Select app** → Choose "Mail"
-6. Click **Select device** → Choose "Other" and type "Birthday Reminder"
-7. Click **Generate**
-8. **Copy the 16-character password** (you'll need this later)
+   Or simply:
+   - On **Mac**: Drag the `birthday` folder onto Terminal
+   - On **Windows**: Hold Shift, right-click the `birthday` folder, and select "Open PowerShell window here"
 
----
+### Step 3: Install Flask (First Time Only)
 
-## 💻 Option A: Running Locally (On Your Computer)
-
-### Step 1: Clone the Repository
-
-```bash
-cd ~/Documents
-git clone https://github.com/YOUR_USERNAME/birthday.git
-cd birthday
-```
-
-### Step 2: Create a Virtual Environment
+Flask is the web framework we use. Install it with:
 
 ```bash
-# Create virtual environment
-python3 -m venv venv
-
-# Activate it
-# On Mac/Linux:
-source venv/bin/activate
-# On Windows:
-# venv\Scripts\activate
+pip3 install -r requirements.txt
 ```
 
-### Step 3: Install Dependencies
+This might take 30 seconds. You only need to do this once!
+
+### Step 4: Start the Website
+
+Run this command:
 
 ```bash
-pip install -r requirements.txt
-```
-
-### Step 4: Set Up Environment Variables
-
-```bash
-# Copy the example file
-cp .env.example .env
-
-# Edit the .env file with your favorite text editor
-# For Mac:
-open .env
-# For Windows:
-# notepad .env
-```
-
-Fill in your details in the `.env` file:
-
-```env
-GMAIL_ADDRESS=your.email@gmail.com
-GMAIL_APP_PASSWORD=your_16_char_app_password
-RECIPIENT_EMAIL=your.email@gmail.com
-SECRET_KEY=any_random_long_string_here
-```
-
-### Step 5: Run the Application
-
-```bash
-python app.py
+python3 app.py
 ```
 
 You should see:
 ```
 Starting Birthday Reminder App...
-Scheduler set to check birthdays daily at 7:00 AM America/New_York
 Access the website at: http://127.0.0.1:5000
+Press Ctrl+C to stop the server
 ```
 
-### Step 6: Open Your Browser
+### Step 5: Open in Your Browser
 
-Go to: **http://127.0.0.1:5000**
+Open your web browser and go to:
 
-🎉 You're ready to add birthdays!
-
-### Step 7: Keep It Running
-
-**Important**: For the app to check birthdays daily at 7 AM, your computer needs to be on and the app needs to be running. If you turn off your computer, the app stops working.
-
-**Recommendation**: Deploy to a cloud service (see Option B below) so it runs 24/7 for free!
-
----
-
-## ☁️ Option B: Deploy to Render (Free, Always-On Cloud Hosting)
-
-Render is a free cloud service that will keep your app running 24/7. Perfect for this use case!
-
-### Step 1: Push to GitHub
-
-```bash
-git add .
-git commit -m "Initial birthday reminder app"
-git push origin main
+```
+http://127.0.0.1:5000
 ```
 
-### Step 2: Sign Up for Render
+🎉 **You should see your birthday reminder page!**
 
-1. Go to: https://render.com/
-2. Click **"Sign Up"** and use your GitHub account
+### Step 6: Stop the Website
 
-### Step 3: Create a New Web Service
+When you're done, go back to Terminal and press:
+- **Ctrl+C** (Mac or Windows)
 
-1. Click **"New +"** → **"Web Service"**
-2. Connect your GitHub account if prompted
-3. Select your **`birthday`** repository
-4. Fill in the details:
-   - **Name**: `birthday-reminder` (or any name you like)
-   - **Environment**: `Python 3`
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `gunicorn app:app`
-   - **Instance Type**: Select **"Free"**
-
-### Step 4: Add Environment Variables
-
-In the "Environment" section, add these variables:
-
-| Key | Value |
-|-----|-------|
-| `GMAIL_ADDRESS` | your.email@gmail.com |
-| `GMAIL_APP_PASSWORD` | your_16_char_app_password |
-| `RECIPIENT_EMAIL` | your.email@gmail.com |
-| `SECRET_KEY` | any_random_long_string |
-
-### Step 5: Deploy
-
-1. Click **"Create Web Service"**
-2. Wait 2-3 minutes for deployment
-3. Once deployed, you'll get a URL like: `https://birthday-reminder.onrender.com`
-
-🎉 Your app is now live and will run 24/7 for free!
-
-**Note**: Render's free tier may "sleep" after 15 minutes of inactivity. The daily 7 AM check will wake it up automatically, so your birthday reminders will always work!
+The website will stop running.
 
 ---
 
-## ☁️ Option C: Deploy to Railway (Alternative Free Hosting)
+## 🎨 How It Looks
 
-Railway is another excellent free option:
+**If someone has a birthday today:**
+- Big cake emoji 🎂
+- "Today is [Name]'s Birthday!"
+- Celebration emojis 🎉
 
-### Step 1: Push to GitHub (if not done already)
+**If nobody has a birthday:**
+- Calendar emoji 📅
+- "No Birthdays Today"
+- "Enjoy your day! 😊"
 
-```bash
-git add .
-git commit -m "Initial birthday reminder app"
-git push origin main
+---
+
+## ✏️ How to Add or Change Birthdays
+
+Open the file [app.py](app.py) in any text editor and find this section (around line 13):
+
+```python
+# HARD-CODED BIRTHDAYS LIST
+# Format: (Name, Month, Day)
+BIRTHDAYS = [
+    ("David", 10, 23),   # October 23
+    ("Suzie", 10, 24),   # October 24
+    ("Kevin", 10, 25),   # October 25
+]
 ```
 
-### Step 2: Sign Up for Railway
+### To Add a Birthday:
 
-1. Go to: https://railway.app/
-2. Click **"Start a New Project"** and connect GitHub
+Add a new line with the format: `("Name", Month, Day),`
 
-### Step 3: Deploy from GitHub
+Example - adding Maria's birthday on December 15:
+```python
+BIRTHDAYS = [
+    ("David", 10, 23),
+    ("Suzie", 10, 24),
+    ("Kevin", 10, 25),
+    ("Maria", 12, 15),   # December 15
+]
+```
 
-1. Select your **`birthday`** repository
-2. Railway will auto-detect it's a Python app
-3. Click **"Deploy Now"**
+### To Remove a Birthday:
 
-### Step 4: Add Environment Variables
+Just delete that person's line.
 
-1. Go to your project → **"Variables"** tab
-2. Add these variables:
-   - `GMAIL_ADDRESS`
-   - `GMAIL_APP_PASSWORD`
-   - `RECIPIENT_EMAIL`
-   - `SECRET_KEY`
+### To Change a Birthday:
 
-### Step 5: Generate a Domain
+Edit the numbers. Remember:
+- Months are numbers: January=1, February=2, ... December=12
+- Days are just the day number (1-31)
 
-1. Go to **"Settings"** → **"Networking"**
-2. Click **"Generate Domain"**
-3. You'll get a URL like: `https://birthday-xxx.railway.app`
-
-🎉 Done! Your app is live!
+**After making changes**, save the file and restart the website (Ctrl+C then `python3 app.py` again).
 
 ---
 
-## 🎯 How to Use the App
-
-### Adding a Birthday
-
-1. Open your app URL in a browser
-2. Fill in the form:
-   - **Name**: Person's name
-   - **Birthday**: Select the date
-3. Click **"Add Birthday"**
-
-### Testing Email Notifications
-
-1. Click the **"Test Email Now"** button at the bottom of the form
-2. Check your email inbox
-3. If someone has a birthday today, you'll receive an email immediately
-
-### Daily Automatic Reminders
-
-- The app automatically checks every day at **7:00 AM America/New_York time**
-- If anyone has a birthday, you'll receive a beautiful HTML email
-- No action needed from you!
-
----
-
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```
 birthday/
-├── app.py                 # Main Flask application
-├── config.py              # Configuration (reads environment variables)
-├── database.py            # SQLite database functions
-├── email_sender.py        # Email notification system
+├── app.py                 # Main Python code (birthdays are here!)
 ├── templates/
-│   └── index.html         # Web interface
-├── requirements.txt       # Python dependencies
-├── .env.example           # Environment variables template
-├── .gitignore            # Git ignore file
-├── Procfile              # For Render/Heroku deployment
-├── runtime.txt           # Python version for deployment
+│   └── index.html         # Website design and layout
+├── requirements.txt       # Lists what Python packages we need
+├── .gitignore            # Tells Git what not to track
 └── README.md             # This file!
+```
+
+---
+
+## 🐙 Using with GitHub
+
+### First Time Setup
+
+```bash
+# Initialize git (if not already done)
+git init
+
+# Add all files
+git add .
+
+# Make your first commit
+git commit -m "Initial birthday reminder website"
+
+# Connect to GitHub (replace YOUR_USERNAME with your GitHub username)
+git remote add origin https://github.com/YOUR_USERNAME/birthday.git
+
+# Push to GitHub
+git push -u origin main
+```
+
+### After Making Changes
+
+```bash
+git add .
+git commit -m "Updated birthdays"
+git push
 ```
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Emails Not Sending?
+### "python3: command not found"
 
-1. **Check your Gmail App Password**: Make sure you copied all 16 characters correctly
-2. **2-Step Verification**: Ensure it's enabled on your Google account
-3. **Environment Variables**: Verify they're set correctly in `.env` (local) or in your hosting service dashboard (cloud)
-4. **Check Spam Folder**: Sometimes birthday emails end up in spam
+- Try `python` instead of `python3`
+- Make sure Python is installed (see Step 1)
 
-### App Not Starting?
+### "pip3: command not found"
 
-1. **Python Version**: Make sure you have Python 3.11+ installed
-2. **Dependencies**: Run `pip install -r requirements.txt` again
-3. **Environment Variables**: Ensure your `.env` file exists and has all required variables
+- Try `pip` instead of `pip3`
+- Or try: `python3 -m pip install -r requirements.txt`
 
-### Database Errors?
+### "Address already in use"
 
-1. Delete `birthdays.db` file and restart the app (it will recreate the database)
-2. Make sure you have write permissions in the app directory
+- Another program is using port 5000
+- Try stopping other web servers, or change the port in [app.py:50](app.py#L50):
+  ```python
+  app.run(debug=True, port=5001)  # Changed from 5000 to 5001
+  ```
 
----
+### The website shows the wrong date or birthdays
 
-## 🔒 Security Notes
-
-- **NEVER commit your `.env` file** to GitHub (it's in `.gitignore`)
-- **NEVER share your Gmail App Password** with anyone
-- Use GitHub Secrets or environment variables in your hosting service for sensitive data
-- The `.env` file is only for local development
+- Make sure your computer's date and time are set correctly
+- The website uses your computer's date to check birthdays
 
 ---
 
-## 🎨 Customization
+## 💡 Tips
 
-### Change Reminder Time
-
-Edit [config.py:11](config.py#L11):
-
-```python
-REMINDER_HOUR = 7  # Change to any hour (0-23)
-```
-
-### Change Timezone
-
-Edit [config.py:10](config.py#L10):
-
-```python
-TIMEZONE = 'America/New_York'  # Change to your timezone
-```
-
-Common timezones:
-- `America/Los_Angeles` (Pacific)
-- `America/Chicago` (Central)
-- `America/New_York` (Eastern)
-- `Europe/London` (UK)
-- `Asia/Tokyo` (Japan)
-
-Full list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+1. **Bookmark the URL** in your browser: `http://127.0.0.1:5000`
+2. **Create a daily routine**: Open the website each morning
+3. **Keep the app running** in Terminal throughout the day, or start/stop it as needed
+4. **Test it**: Temporarily change a birthday to today's date to see the celebration screen!
 
 ---
 
-## 📝 License
+## 🎉 That's It!
 
-This project is open source and free to use for personal purposes.
+You now have a simple birthday reminder website running on your computer. No databases, no email setup, no cloud services - just open it whenever you want to check!
 
----
-
-## 🤝 Support
-
-If you encounter any issues:
-
-1. Check the **Troubleshooting** section above
-2. Make sure all environment variables are set correctly
-3. Verify your Gmail App Password is correct
-
----
-
-## 🎉 Enjoy!
-
-Never forget a birthday again! 🎂
+**Questions or issues?** Check the Troubleshooting section above.
 
 ---
 
