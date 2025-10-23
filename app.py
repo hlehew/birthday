@@ -40,7 +40,8 @@ def get_todays_birthdays():
 def index():
     """Display the main page"""
     todays_birthdays = get_todays_birthdays()
-    return render_template('index.html', birthdays=todays_birthdays)
+    today_date = datetime.now().strftime('%B %d, %Y')
+    return render_template('index.html', birthdays=todays_birthdays, today_date=today_date)
 
 
 if __name__ == '__main__':
