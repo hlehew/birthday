@@ -104,7 +104,83 @@
             font-size: 60px;
             margin: 20px 0;
         }
+
+        .message-suggestions {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .message-suggestions h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .message-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .message-card:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .message-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .message-text {
+            color: #333;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .copy-hint {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
     </style>
+    <script>
+        function copyMessage(element) {
+            // Get the message text from the clicked card
+            const messageText = element.querySelector('.message-text').textContent;
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(messageText).then(function() {
+                // Visual feedback
+                const originalBg = element.style.background;
+                element.style.background = '#d4edda';
+                element.innerHTML = '<span style="color: #155724; font-weight: bold;">✓ Copied to clipboard!</span>';
+
+                // Reset after 1.5 seconds
+                setTimeout(function() {
+                    location.reload();
+                }, 1500);
+            }).catch(function(err) {
+                alert('Failed to copy message. Please copy manually.');
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -134,6 +210,20 @@
                         </div>
                     </div>
                     <div class="celebration">🎉 🎈 🎁 🎊 🥳</div>
+                {% endif %}
+
+                <!-- Birthday Message Suggestions -->
+                {% if message_suggestions %}
+                    <div class="message-suggestions">
+                        <h3>💌 Message Suggestions</h3>
+                        {% for message in message_suggestions %}
+                            <div class="message-card" onclick="copyMessage(this)">
+                                <span class="message-number">{{ loop.index }}</span>
+                                <span class="message-text">{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                        <p class="copy-hint">Click on any message to copy it to your clipboard!</p>
+                    </div>
                 {% endif %}
 
             {% else %}
